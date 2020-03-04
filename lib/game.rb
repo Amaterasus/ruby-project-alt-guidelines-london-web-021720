@@ -1,3 +1,3 @@
-class Game < ActiveRecord::Migration[5.2]
+class Game < ActiveRecord::Base
 
 end

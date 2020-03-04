@@ -1,3 +1,3 @@
-class Player < ActiveRecord::Migration[5.2]
+class Player < ActiveRecord::Base
 
 end
