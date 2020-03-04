@@ -36,6 +36,34 @@ on :key_up do |event|
         name_capture_text.text = name_capture_text.text.delete_suffix(name_capture_text.text.last)
     elsif name_capture_text.text.length > 2 && event.key == "return"
         player = Player.find_or_create_by(name: name_capture_text.text)
+    elsif name_capture_text.text.length > 15
+            
+    elsif event.key.length == 1
+        name_capture_text.text += event.key
+    end
+    name_capture_text.text.capitalize!
+end
+
+on :mouse_down do |event|
+    puts event.x, event.y
+    if player
+        if event.x > 349 && event.x < 551 && event.y > 199 && event.y < 236
+            player = nil
+        elsif event.x > 349 && event.x < 551 && event.y > 249 && event.y < 286
+            player.destroy
+            player = nil
+        elsif event.x > 349 && event.x < 551 && event.y > 299 && event.y < 336
+            close
+        end
+    end
+
+end
+
+update do
+
+    if player && game
+
+    elsif player
         name_capture.opacity = 0
         name_capture_label.opacity = 0
         name_capture_text.opacity = 0
@@ -50,51 +78,20 @@ on :key_up do |event|
         delete_player_label.opacity = 1
         quit.opacity = 1
         quit_label.opacity = 1
-    elsif name_capture_text.text.length > 15
-            
-    elsif event.key.length == 1
-        name_capture_text.text += event.key
-    end
-    name_capture_text.text.capitalize!
-end
-
-on :mouse_down do |event|
-    puts event.x, event.y
-    if player
-        if event.x > 349 && event.x < 551 && event.y > 199 && event.y < 236
-            new_game.opacity = 0
-            new_game_label.opacity = 0
-            leaderboard.opacity = 0
-            leaderboard_label.opacity = 0
-            change_player.opacity = 0
-            change_player_label.opacity = 0
-            delete_player.opacity = 0
-            delete_player_label.opacity = 0
-            quit.opacity = 0
-            quit_label.opacity = 0
-            name_capture.opacity = 1
-            name_capture_label.opacity = 1
-            name_capture_text.opacity = 1
-            player = nil
-        elsif event.x > 349 && event.x < 551 && event.y > 249 && event.y < 286
-            player.destroy
-            new_game.opacity = 0
-            new_game_label.opacity = 0
-            leaderboard.opacity = 0
-            leaderboard_label.opacity = 0
-            change_player.opacity = 0
-            change_player_label.opacity = 0
-            delete_player.opacity = 0
-            delete_player_label.opacity = 0
-            quit.opacity = 0
-            quit_label.opacity = 0
-            name_capture.opacity = 1
-            name_capture_label.opacity = 1
-            name_capture_text.opacity = 1
-            player = nil
-        elsif event.x > 349 && event.x < 551 && event.y > 299 && event.y < 336
-            close
-        end
+    elsif !player
+        new_game.opacity = 0
+        new_game_label.opacity = 0
+        leaderboard.opacity = 0
+        leaderboard_label.opacity = 0
+        change_player.opacity = 0
+        change_player_label.opacity = 0
+        delete_player.opacity = 0
+        delete_player_label.opacity = 0
+        quit.opacity = 0
+        quit_label.opacity = 0
+        name_capture.opacity = 1
+        name_capture_label.opacity = 1
+        name_capture_text.opacity = 1
     end
 
 end
