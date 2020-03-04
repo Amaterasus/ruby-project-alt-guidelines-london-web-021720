@@ -12,18 +12,18 @@
 
 ActiveRecord::Schema.define(version: 2020_03_03_145301) do
 
-  create_table "game", force: :cascade do |t|
+  create_table "games", force: :cascade do |t|
     t.integer "player_id"
     t.integer "time_played"
     t.integer "score"
     t.integer "enemies_killed"
   end
 
-  create_table "leaderboard", force: :cascade do |t|
+  create_table "leaderboards", force: :cascade do |t|
     t.integer "game_id"
   end
 
-  create_table "player", force: :cascade do |t|
+  create_table "players", force: :cascade do |t|
     t.string "name"
   end
 
