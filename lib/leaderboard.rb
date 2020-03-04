@@ -1,3 +1,5 @@
-class Player < ActiveRecord::Base
+class Leaderboard < ActiveRecord::Base
+    has_many :games
+    
 
 end
