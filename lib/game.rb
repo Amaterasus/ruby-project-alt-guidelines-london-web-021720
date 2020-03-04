@@ -1,5 +1,7 @@
 class Game < ActiveRecord::Base
     belongs_to :leaderboard
-    has_many :players
+    belongs_to :player
+
+
 
 end

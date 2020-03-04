@@ -28,6 +28,11 @@ delete_player_label = Text.new("Delete player", color: "orange", x: delete_playe
 quit = Rectangle.new( width: 200, height: 35, x: 350, y: 300, color: 'aqua', z: 20, opacity: 0)
 quit_label = Text.new("Quit", color: "orange", x: quit.x + 85 , y: quit.y, z: quit.z * 2, opacity: 0)
 
+on :key_held do |event|
+    if player && game
+        player.move(event.key)
+    end
+end
 
 on :key_up do |event|
     if player
@@ -36,6 +41,7 @@ on :key_up do |event|
         name_capture_text.text = name_capture_text.text.delete_suffix(name_capture_text.text.last)
     elsif name_capture_text.text.length > 2 && event.key == "return"
         player = Player.find_or_create_by(name: name_capture_text.text)
+        player.make_pos
     elsif name_capture_text.text.length > 15
             
     elsif event.key.length == 1
@@ -47,9 +53,16 @@ end
 on :mouse_down do |event|
     puts event.x, event.y
     if player
-        if event.x > 349 && event.x < 551 && event.y > 199 && event.y < 236
+        if game
+
+        elsif event.x > 349 && event.x < 551 && event.y > 99 && event.y < 136
+            game = Game.create(player: player)
+        elsif event.x > 349 && event.x < 551 && event.y > 149 && event.y < 186
+            
+        elsif event.x > 349 && event.x < 551 && event.y > 199 && event.y < 236
             player = nil
         elsif event.x > 349 && event.x < 551 && event.y > 249 && event.y < 286
+            player.games.destroy_all
             player.destroy
             player = nil
         elsif event.x > 349 && event.x < 551 && event.y > 299 && event.y < 336
@@ -60,9 +73,19 @@ on :mouse_down do |event|
 end
 
 update do
-
     if player && game
-
+        clear
+        new_game.opacity = 0
+        new_game_label.opacity = 0
+        leaderboard.opacity = 0
+        leaderboard_label.opacity = 0
+        change_player.opacity = 0
+        change_player_label.opacity = 0
+        delete_player.opacity = 0
+        delete_player_label.opacity = 0
+        quit.opacity = 0
+        quit_label.opacity = 0
+        player.draw
     elsif player
         name_capture.opacity = 0
         name_capture_label.opacity = 0
@@ -93,7 +116,7 @@ update do
         name_capture_label.opacity = 1
         name_capture_text.opacity = 1
     end
-
+    
 end
 
 show
