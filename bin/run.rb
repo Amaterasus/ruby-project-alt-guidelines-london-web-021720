@@ -88,7 +88,7 @@ update do
         quit.opacity = 0
         quit_label.opacity = 0
         player.draw
-        enemy.each { |e| e.draw}
+        enemy.each { |e| e.draw }
     elsif player
         name_capture.opacity = 0
         name_capture_label.opacity = 0

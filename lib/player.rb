@@ -25,7 +25,7 @@ class Player < ActiveRecord::Base
         @x3 = (x3 - @x) * Math.cos(radians) - (y3 - @y) * Math.sin(radians) + @x
         @y3 = (x3 - @x) * Math.sin(radians) + (y3 - @y) * Math.cos(radians) + @y
 
-        Triangle.new(x1: @x1, y1: @y1, x2: @x2, y2: @y2, x3: @x3, y3: @y3, z: 49, color: "blue")
+        Triangle.new(x1: @x1, y1: @y1, x2: @x2, y2: @y2, x3: @x3, y3: @y3, z: 50, color: "blue")
     end
 
     def make_pos
