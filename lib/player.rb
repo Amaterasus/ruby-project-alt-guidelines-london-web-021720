@@ -1,11 +1,31 @@
 class Player < ActiveRecord::Base
     has_many :games
 
-    attr_accessor :x1, :y1, :x2, :y2, :x3, :y3, :x_direction, :y_direction
-
+    attr_accessor :x, :y, :rotation
 
     def draw
-        Triangle.new(x1: @x1, y1: @y1, x2: @x2, y2: @y2, x3: @x3, y3: @y3, color: "blue")
+        
+
+        @rotation ||= 0
+        @x ||= 450
+        @y ||= 250
+        radians = (@rotation - 90) * Math::PI/180
+
+        x1 = @x
+        y1 = @y - 20
+        x2 = @x - 10
+        y2 = @y + 10
+        x3 = @x + 10
+        y3 = @y + 10
+
+        @x1 = (x1 - @x) * Math.cos(radians) - (y1 - @y) * Math.sin(radians) + @x
+        @y1 = (x1 - @x) * Math.sin(radians) + (y1 - @y) * Math.cos(radians) + @y
+        @x2 = (x2 - @x) * Math.cos(radians) - (y2 - @y) * Math.sin(radians) + @x
+        @y2 = (x2 - @x) * Math.sin(radians) + (y2 - @y) * Math.cos(radians) + @y
+        @x3 = (x3 - @x) * Math.cos(radians) - (y3 - @y) * Math.sin(radians) + @x
+        @y3 = (x3 - @x) * Math.sin(radians) + (y3 - @y) * Math.cos(radians) + @y
+
+        Triangle.new(x1: @x1, y1: @y1, x2: @x2, y2: @y2, x3: @x3, y3: @y3, z: 49, color: "blue")
     end
 
     def make_pos
@@ -15,60 +35,24 @@ class Player < ActiveRecord::Base
         @y2 = 270
         @x3 = 460
         @y3 = 270
-        @x_direction = 0
-        @y_direction = 5
+    end
+
+    def rotate(amount = 0)
+        @rotation += amount
     end
 
     def rotate_left
-        degrees = 3 * Math::PI/180
-        x_origin = (@x1 + @x2 + @x3) / 3
-        y_origin = (@y1 + @y2 + @y3) / 3
-        @x1 = (@x1 - x_origin) * Math.cos(degrees) - (@y1 - y_origin) * Math.sin(degrees) + x_origin
-        @y1 = (@x1 - x_origin) * Math.sin(degrees) + (@y1 - y_origin) * Math.cos(degrees) + y_origin
-        @x2 = (@x2 - x_origin) * Math.cos(degrees) - (@y2 - y_origin) * Math.sin(degrees) + x_origin
-        @y2 = (@x2 - x_origin) * Math.sin(degrees) + (@y2 - y_origin) * Math.cos(degrees) + y_origin
-        @x3 = (@x3 - x_origin) * Math.cos(degrees) - (@y3 - y_origin) * Math.sin(degrees) + x_origin
-        @y3 = (@x3 - x_origin) * Math.sin(degrees) + (@y3 - y_origin) * Math.cos(degrees) + y_origin
-
+        rotate(3)
     end
 
     def rotate_right
-        degrees = -3 * Math::PI/180
-        x_origin = (@x1 + @x2 + @x3) / 3
-        y_origin = (@y1 + @y2 + @y3) / 3
-        @x1 = (@x1 - x_origin) * Math.cos(degrees) - (@y1 - y_origin) * Math.sin(degrees) + x_origin
-        @y1 = (@x1 - x_origin) * Math.sin(degrees) + (@y1 - y_origin) * Math.cos(degrees) + y_origin
-        @x2 = (@x2 - x_origin) * Math.cos(degrees) - (@y2 - y_origin) * Math.sin(degrees) + x_origin
-        @y2 = (@x2 - x_origin) * Math.sin(degrees) + (@y2 - y_origin) * Math.cos(degrees) + y_origin
-        @x3 = (@x3 - x_origin) * Math.cos(degrees) - (@y3 - y_origin) * Math.sin(degrees) + x_origin
-        @y3 = (@x3 - x_origin) * Math.sin(degrees) + (@y3 - y_origin) * Math.cos(degrees) + y_origin
-    end
-
-    def move_forward
-        x_origin = (@x1 + @x2 + @x3) / 3
-        y_origin = (@y1 + @y2 + @y3) / 3
-        @x1 - x_origin
-    end
-
-    def move_backward
-
+        rotate(-3)
     end
 
     def move(direction)
         if direction == "w"
-            @y1 -= @y_direction
-            @y2 -= @y_direction
-            @y3 -= @y_direction
-            @x1 -= @x_direction
-            @x2 -= @x_direction
-            @x3 -= @x_direction
-        elsif direction == "s"
-            @y1 += @y_direction
-            @y2 += @y_direction
-            @y3 += @y_direction
-            @x1 += @x_direction
-            @x2 += @x_direction
-            @x3 += @x_direction
+            @y += -Math.sin(@rotation * Math::PI/180)
+            @x += -Math.cos(@rotation * Math::PI/180)
         elsif direction == "a"
             rotate_right
         elsif direction == "d"
