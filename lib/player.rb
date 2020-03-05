@@ -25,22 +25,24 @@ class Player < ActiveRecord::Base
         degrees = 1 * Math::PI/180
         x_origin = (@x1 + @x2 + @x3) / 3
         y_origin = (@y1 + @y2 + @y3) / 3
-        @x1 = @x1 * Math.cos(degrees) - @y1 * Math.sin(degrees)
-        @y1 = @x1 * Math.sin(degrees) + @y1 * Math.cos(degrees)
-        @x2 = @x2 * Math.cos(degrees) - @y2 * Math.sin(degrees)
-        @y2 = @x2 * Math.sin(degrees) + @y2 * Math.cos(degrees)
-        @x3 = @x3 * Math.cos(degrees) - @y3 * Math.sin(degrees)
-        @y3 = @x3 * Math.sin(degrees) + @y3 * Math.cos(degrees)
+        @x1 = (@x1 - x_origin) * Math.cos(degrees) - (@y1 - y_origin) * Math.sin(degrees) + x_origin
+        @y1 = (@x1 - x_origin) * Math.sin(degrees) + (@y1 - y_origin) * Math.cos(degrees) + y_origin
+        @x2 = (@x2 - x_origin) * Math.cos(degrees) - (@y2 - y_origin) * Math.sin(degrees) + x_origin
+        @y2 = (@x2 - x_origin) * Math.sin(degrees) + (@y2 - y_origin) * Math.cos(degrees) + y_origin
+        @x3 = (@x3 - x_origin) * Math.cos(degrees) - (@y3 - y_origin) * Math.sin(degrees) + x_origin
+        @y3 = (@x3 - x_origin) * Math.sin(degrees) + (@y3 - y_origin) * Math.cos(degrees) + y_origin
     end
 
     def rotate_right
         degrees = -1 * Math::PI/180
-        @x1 = @x1 * Math.cos(degrees) - @y1 * Math.sin(degrees)
-        @y1 = @x1 * Math.sin(degrees) + @y1 * Math.cos(degrees)
-        @x2 = @x2 * Math.cos(degrees) - @y2 * Math.sin(degrees)
-        @y2 = @x2 * Math.sin(degrees) + @y2 * Math.cos(degrees)
-        @x3 = @x3 * Math.cos(degrees) - @y3 * Math.sin(degrees)
-        @y3 = @x3 * Math.sin(degrees) + @y3 * Math.cos(degrees)
+        x_origin = (@x1 + @x2 + @x3) / 3
+        y_origin = (@y1 + @y2 + @y3) / 3
+        @x1 = (@x1 - x_origin) * Math.cos(degrees) - (@y1 - y_origin) * Math.sin(degrees) + x_origin
+        @y1 = (@x1 - x_origin) * Math.sin(degrees) + (@y1 - y_origin) * Math.cos(degrees) + y_origin
+        @x2 = (@x2 - x_origin) * Math.cos(degrees) - (@y2 - y_origin) * Math.sin(degrees) + x_origin
+        @y2 = (@x2 - x_origin) * Math.sin(degrees) + (@y2 - y_origin) * Math.cos(degrees) + y_origin
+        @x3 = (@x3 - x_origin) * Math.cos(degrees) - (@y3 - y_origin) * Math.sin(degrees) + x_origin
+        @y3 = (@x3 - x_origin) * Math.sin(degrees) + (@y3 - y_origin) * Math.cos(degrees) + y_origin
     end
 
     def move(direction)
