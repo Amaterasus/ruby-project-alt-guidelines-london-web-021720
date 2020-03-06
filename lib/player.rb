@@ -12,7 +12,7 @@ class Player < ActiveRecord::Base
         radians = (@rotation - 90) * Math::PI/180
 
         x1 = @x
-        y1 = @y - 15
+        y1 = @y - 12
         x2 = @x - 7.5
         y2 = @y + 7.5
         x3 = @x + 7.5
@@ -62,7 +62,7 @@ class Player < ActiveRecord::Base
     def player_collision?(enemy_array)
         x_origin = (@x1 + @x2 + @x3) / 3
         y_origin = (@y1 + @y2 + @y3) / 3
-        enemy_array.any? { |enemy| enemy.x >= (x_origin - 7.5) && enemy.x <= (x_origin + 7.5) && enemy.y >= (y_origin - 3.25) && enemy.y <= (y_origin + 3.25) }
+        enemy_array.any? { |enemy| enemy.x >= (x_origin - 10.7) && enemy.x <= (x_origin + 10.7) && enemy.y >= (y_origin - 5.7) && enemy.y <= (y_origin + 5.7) }
             # calculate player area
             # calculate the enemy area
             # do they intersect?
