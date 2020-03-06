@@ -15,12 +15,13 @@ ActiveRecord::Schema.define(version: 2020_03_03_145301) do
   create_table "games", force: :cascade do |t|
     t.integer "player_id"
     t.integer "time_played"
-    t.integer "score"
+    t.float "score"
     t.integer "enemies_killed"
+    t.integer "leaderboard_id"
   end
 
   create_table "leaderboards", force: :cascade do |t|
-    t.integer "game_id"
+    t.integer "rank"
   end
 
   create_table "players", force: :cascade do |t|

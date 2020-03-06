@@ -7,12 +7,13 @@ class InitialMigration < ActiveRecord::Migration[5.2]
     create_table :games do |t|
       t.integer :player_id
       t.integer :time_played
-      t.integer :score
+      t.float :score
       t.integer :enemies_killed
+      t.integer :leaderboard_id
     end
 
     create_table :leaderboards do |t|
-      t.integer :game_id
+      t.integer :rank
     end
   end
 end
