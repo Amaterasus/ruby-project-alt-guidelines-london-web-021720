@@ -1,3 +1,5 @@
-class Player < ActiveRecord::Migration[5.2]
+class Leaderboard < ActiveRecord::Base
+    has_many :games
+    
 
 end

@@ -1,3 +1,7 @@
-class Game < ActiveRecord::Migration[5.2]
+class Game < ActiveRecord::Base
+    belongs_to :leaderboard
+    belongs_to :player
+
+
 
 end
