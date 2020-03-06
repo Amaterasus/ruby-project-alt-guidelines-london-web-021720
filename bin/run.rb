@@ -8,7 +8,7 @@ set title: "Release The swarm",
 
 player = nil
 game = nil
-enemy = []
+enemy = Array.new(40) { Enemy.new }
 
 name_capture = Rectangle.new(
     width: 200, height: 75,
@@ -57,8 +57,7 @@ on :mouse_down do |event|
         if game
 
         elsif event.x > 349 && event.x < 551 && event.y > 99 && event.y < 136
-            game = Game.create(player: player)
-            enemy << Enemy.new()
+            game = Game.create(player: player, time_played: 0, score: 0, enemies_killed: 0)
         elsif event.x > 349 && event.x < 551 && event.y > 149 && event.y < 186
             
         elsif event.x > 349 && event.x < 551 && event.y > 199 && event.y < 236
@@ -87,8 +86,15 @@ update do
         delete_player_label.opacity = 0
         quit.opacity = 0
         quit_label.opacity = 0
+        game.score += 1
+        if player.player_collision?(enemy)
+            puts "COLLISION"
+            game.save
+            game = nil
+        end
         player.draw
         enemy.each { |e| e.draw }
+        enemy.each { |e| e.move }
     elsif player
         name_capture.opacity = 0
         name_capture_label.opacity = 0
@@ -119,7 +125,6 @@ update do
         name_capture_label.opacity = 1
         name_capture_text.opacity = 1
     end
-    
 end
 
 show
